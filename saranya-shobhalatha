@@ -1,0 +1,55 @@
+1. START
+2. For each ݒ א ݒሾܩሿ
+    3. do d[v] ՚ ∞
+    4. pd[v] ՚ ∞
+    5. π[v] ՚NIL
+    6. ns[v] ՚ 0
+    7. End For
+8. d[s] ՚0
+9. source՚ s
+10. Labeled-New ՚ Empty
+11. Labeled-Old՚ Empty
+12. For i ՚1 to 2|ܸሺܩሻ|
+    13. do ns[source] ՚ ns[source]+1
+    14. min-d-old ՚ ∞
+    15. if ( ns[source] > 2 OR d[s] < 0)
+        16. then display “NEGATIVE CYCLE DETECTED”
+        17. Exit Loop and STOP
+        18. End if
+    19. For each v א Adj[source]
+        20. do pd[v] ՚ d[v]
+        21. if d[v]൐ d[source] + w(source,v)
+            22. then d[v] ՚ d[source] + w(source,v)
+            23. π[v] ՚source
+            24. End if
+        25. if pd[v] > d[v]
+            26. then Labeled-New ՚ Labeled-New ׫ ሼvሽ
+            27. Labeled-Old ՚ Labeled-Oldെሼvሽ
+            28. min-d-new ՚ d[v]
+            29. min-v-new ՚ v
+            30. else min-d-new ՚ ∞
+        31. if(min-d-new < min-d-old)
+            32. then min-d-old ՚ d[v]
+            33. min-v-old ՚ v
+            34. End if
+        35. End For
+    36. if ( min-v-old = source )
+        37. then ns[source] ՚ ns[source] െ1
+        38. i՚ iെ1
+        39. End if
+    40. For each v א Labeled-Old
+        41. do if ( min-d-old > d[v] )
+            42. then min-d-old՚ d[v]
+            43. min-v-old ՚ v
+            44. End if
+        45. End For
+    46. source ՚ min-v-old
+    47. Labeled-Old ՚ Labeled-Old ׫ Labeled-New ←
+    48. Labeled-New ՚ Empty
+    49. if ( Labeled-Old = Empty )
+        50. then display “SOLUTION FOUND”
+        51. Exit loop and STOP
+        52. End if
+    53. Labeled-Old ՚ Labeled-Old െሼݎݑ݋ݏ݁ܿሽ
+    54. End For
+55. STOP

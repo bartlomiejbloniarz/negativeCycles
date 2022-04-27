@@ -1,0 +1,17 @@
+done:
+bellman-ford O(nm)
+bellman-ford-break O(nm)
+saranya-shobhalatha O(n^2)
+BFCF - bellman-ford-moore with walk to the root O(n^2m)
+BFCS - bellman-ford-moore with amortized search O(nm)
+Goldfarb-Hao-Kai (GHK3) - level-based O(nm)
+
+TODO:
+Tarjan (BFCT/BFCM???) - subtree disassembly O(nm)
+Goldberg-Radzik (GORC) - Admissible graph search
+
+maybe:
+SIMPLEX - subtree traversal O(n^2m)
+Pallotino - subtree disassembly O(n^2m)
+BFCTN - tarjan's natural variant? subtree disassembly with update?? O(nm)
+
