@@ -48,10 +48,10 @@ bool containsNegativeCycle(Graph& graph, int source){
                     }
                 }
                 if (dst != -1) {
-                    status[dst] = IN_TOP_SORT;
-                    current[dst] = 0;
+                    status[src] = IN_TOP_SORT;
+                    current[src] = 0;
                 } else
-                    status[dst] = OUT_OF_STACKS;
+                    status[src] = OUT_OF_STACKS;
             }
 
             if (status[src] == IN_TOP_SORT){
@@ -61,13 +61,17 @@ bool containsNegativeCycle(Graph& graph, int source){
                     int i, size = graph.neighbours[src].size();
                     for(i=current[src]; i<size; i++){
                         auto neighbour = graph.neighbours[src][i];
-                        if (distance[src] + neighbour.weight <= distance[neighbour.dst] && status[neighbour.dst] < IN_TOP_SORT){
-                            current[src] = i+1;
-                            topSort.push(src);
-                            status[neighbour.dst] = IN_TOP_SORT;
-                            current[neighbour.dst] = 0;
-                            src = neighbour.dst;
-                            break;
+                        if (distance[src] + neighbour.weight <= distance[neighbour.dst]){
+                            if (status[neighbour.dst] < IN_TOP_SORT) {
+                                current[src] = i + 1;
+                                topSort.push(src);
+                                status[neighbour.dst] = IN_TOP_SORT;
+                                current[neighbour.dst] = 0;
+                                src = neighbour.dst;
+                                break;
+                            }
+                            else if (status[neighbour.dst] == IN_TOP_SORT)
+                                return true;
                         }
                     }
                     if (i == size){
@@ -103,4 +107,5 @@ bool containsNegativeCycle(Graph& graph, int source){
             }
         }
     }
+    return false;
 }

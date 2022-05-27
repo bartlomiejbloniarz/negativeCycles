@@ -5,9 +5,9 @@ CP := cp
 RMDIR := rm -r -f
 SYMLINK := ln -s
 
-TESTER=bellman-ford
+TESTER=bellman-ford-break
 
-all: output bellman-ford bellman-ford-break saranya-shobhalatha BFCF BFCS goldfarb-hao-kai goldberg-radzik
+all: output bellman-ford bellman-ford-break saranya-shobhalatha BFCF BFCS goldfarb-hao-kai goldberg-radzik tarjan
 
 output:
 	$(MD) output
@@ -25,6 +25,8 @@ BFCS: output output/BFCS.o
 goldfarb-hao-kai: output output/goldfarb-hao-kai.o
 
 goldberg-radzik: output output/goldberg-radzik.o
+
+tarjan: output output/tarjan.o
 
 test: test-random test-benchmark
 

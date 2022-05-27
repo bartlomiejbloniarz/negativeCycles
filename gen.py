@@ -1,4 +1,5 @@
 import random
+import math
 
 
 def check(x, y, d):
@@ -19,8 +20,8 @@ def getNextEdge(n, maxW, d):
 
 
 def main():
-    maxZ = 10
-    maxN = 1000
+    maxZ = 1
+    maxN = 50
     maxW = 1000
 
     z = random.randint(1, maxZ)
@@ -29,7 +30,7 @@ def main():
     for _ in range(z):
 
         n = random.randint(2, maxN)
-        m = random.randint(0, 30*n)
+        m = random.randint(0, n*(n-1)//2)#*int(math.sqrt(n)))
         s = random.randint(0, n-1)
         d = set()
 
