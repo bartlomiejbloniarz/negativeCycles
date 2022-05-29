@@ -13,7 +13,7 @@ using namespace std;
 bool containsNegativeCycle(Graph &graph, int s){
     int n = graph.n;
     vector<int> d(n, INFINITY), pd(n, INFINITY), pi(n, -1), ns(n, 0);
-    unordered_set<int> labeled_new, labeled_old;
+    Set labeled_new(n), labeled_old(n);
     d[s] = 0;
     int source = s;
     int min_d_new, min_d_old, min_v_old, min_v_new;
@@ -38,25 +38,26 @@ bool containsNegativeCycle(Graph &graph, int s){
             else
                 min_d_new = INFINITY;
             if (min_d_new < min_d_old) {
-                min_d_old = min_d_new;
-                min_v_old = min_v_new;
+                min_d_old = d[v];
+                min_v_old = v;
             }
         }
         if (min_v_old == source){
             ns[source]--;
             i--;
         }
-        for (auto v: labeled_old){
+        for (LinkedListNode* node = labeled_old.list.head->next; node != labeled_old.list.tail; node = node->next){
+            int v = node->x;
             if (min_d_old > d[v]) {
                 min_d_old = d[v];
                 min_v_old = v;
             }
         }
         source = min_v_old;
-        for (auto v: labeled_new)
-            labeled_old.insert(v);
+        for (LinkedListNode* node = labeled_new.list.head->next; node != labeled_new.list.tail; node = node->next)
+            labeled_old.insert(node->x);
         labeled_new.clear();
-        if (labeled_old.empty())
+        if (labeled_old.isEmpty())
             return false;
         labeled_old.erase(source);
     }

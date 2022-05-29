@@ -3,8 +3,6 @@
 
 #include <vector>
 
-#define INFINITY INT_MAX/2
-
 using namespace std;
 
 // walk to the root
@@ -98,6 +96,18 @@ struct Set{
     }
     bool contains(int x) const{
         return nodes[x].x == x;
+    }
+    bool isEmpty(){
+        return list.isEmpty();
+    }
+    void clear(){
+        for (LinkedListNode* node = list.head->next; node != list.tail; ) {
+            int x = node->x;
+            node = node->next;
+            nodes[x].x = -1;
+            nodes[x].unlink();
+        }
+
     }
     ~Set(){
         delete [] nodes;

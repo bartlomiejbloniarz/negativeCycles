@@ -11,7 +11,7 @@ using namespace std;
 bool containsNegativeCycle(Graph& graph, int source){
 
     int n = graph.n, k=1;
-    vector<int> distance(n, INT_MAX);
+    vector<int> distance(n, INFINITY);
     vector<int> predecessor(n, 0);
     vector<int> level(n, 0);
     vector<int> levelCount(n, 0);
@@ -33,7 +33,7 @@ bool containsNegativeCycle(Graph& graph, int source){
             Q1.pop();
             if (level[src] == k){
                 for (auto neighbour: graph.neighbours[src]){
-                    if (distance[src] != INT_MAX && distance[src] + neighbour.weight < distance[neighbour.dst]){
+                    if (distance[src] + neighbour.weight < distance[neighbour.dst]){
                         distance[neighbour.dst] = distance[src] + neighbour.weight;
                         predecessor[neighbour.dst] = src;
                         if (level[neighbour.dst] != k+1) {

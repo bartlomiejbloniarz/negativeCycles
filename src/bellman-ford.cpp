@@ -9,17 +9,17 @@ using namespace std;
 
 bool containsNegativeCycle(Graph& graph, int source){
     int n = graph.n;
-    vector<int> distance(n, INT_MAX);
+    vector<int> distance(n, INFINITY);
     distance[source] = 0;
     for (int i=0; i<n-1; i++) {
         for (auto e: graph.edges) {
-            if (distance[e.src] != INT_MAX && distance[e.dst] > distance[e.src] + e.weight) {
+            if (distance[e.src] != INFINITY && distance[e.dst] > distance[e.src] + e.weight) {
                 distance[e.dst] = distance[e.src] + e.weight;
             }
         }
     }
     for (auto e: graph.edges) {
-        if (distance[e.src] != INT_MAX && distance[e.dst] > distance[e.src] + e.weight) {
+        if (distance[e.dst] > distance[e.src] + e.weight) {
             return true;
         }
     }

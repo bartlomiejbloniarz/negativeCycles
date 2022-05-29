@@ -10,7 +10,7 @@ using namespace std;
 void bellman_ford_moore(Graph& graph, int source){
 
     int n = graph.n;
-    vector<int> distance(n, INT_MAX);
+    vector<int> distance(n, INFINITY);
     vector<bool> inQueue(n, false);
     queue<int>Q;
 
@@ -23,7 +23,7 @@ void bellman_ford_moore(Graph& graph, int source){
         Q.pop();
         inQueue[src] = false;
         for (auto neighbour: graph.neighbours[src]){
-            if (distance[src] != INT_MAX && distance[src] + neighbour.weight < distance[neighbour.dst]){
+            if (distance[src] + neighbour.weight < distance[neighbour.dst]){
                 distance[neighbour.dst] = distance[src] + neighbour.weight;
                 if (!inQueue[neighbour.dst]){
                     inQueue[neighbour.dst] = true;

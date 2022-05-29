@@ -1,6 +1,8 @@
 #ifndef CODE_MAIN_H
 #define CODE_MAIN_H
 
+#define INFINITY INT_MAX/2
+
 using namespace std;
 
 #include <vector>
