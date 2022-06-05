@@ -7,7 +7,7 @@ using namespace std;
 
 bool containsNegativeCycle(Graph& graph, int source){
     int n = graph.n;
-    vector<int> distance(n, INFINITY);
+    vector<number> distance(n, INFINITY);
     distance[source] = 0;
     int changeCounter = 0;
     for (int i=0; i<n-1; i++) {

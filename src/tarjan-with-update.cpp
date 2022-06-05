@@ -2,13 +2,15 @@
 #include "main.h"
 #include "util.h"
 
+#define epsilon 1
+
 using namespace std;
 
-// tarjan with subtree disassembly
+// tarjan with subtree disassembly and update
 // O(nm)
 
 
-bool disassemble(int x, LinkedList* children, Queue &Q, int v){
+bool disassemble(int x, LinkedList* children, Queue &Q, int v, number delta, vector<number> &distance){
     for (LinkedListNode* node = children[x].head->next; node != children[x].tail; ){
         int y = node->x;
         if (y == v)
@@ -18,7 +20,8 @@ bool disassemble(int x, LinkedList* children, Queue &Q, int v){
             node->unlink();
             node->x = -1;
             Q.remove(y);
-            if (disassemble(y, children, Q, v))
+            distance[y] = distance[y] - delta + epsilon;
+            if (disassemble(y, children, Q, v, delta, distance))
                 return true;
             node = temp;
         }
@@ -53,7 +56,7 @@ bool containsNegativeCycle(Graph& graph, int source){
                 }
                 parent[neighbour.dst] = src;
                 Q.push(neighbour.dst);
-                if (disassemble(neighbour.dst, children, Q, src)) {
+                if (disassemble(neighbour.dst, children, Q, src, delta, distance)) {
                     return true;
                 }
                 children[src].push_back(childrenNodes[neighbour.dst]);

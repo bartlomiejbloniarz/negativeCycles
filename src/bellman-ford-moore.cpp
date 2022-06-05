@@ -10,7 +10,7 @@ using namespace std;
 void bellman_ford_moore(Graph& graph, int source){
 
     int n = graph.n;
-    vector<int> distance(n, INFINITY);
+    vector<number> distance(n, INFINITY);
     vector<bool> inQueue(n, false);
     queue<int>Q;
 

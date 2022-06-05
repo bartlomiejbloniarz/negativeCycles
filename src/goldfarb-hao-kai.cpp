@@ -11,7 +11,7 @@ using namespace std;
 bool containsNegativeCycle(Graph& graph, int source){
 
     int n = graph.n, k=1;
-    vector<int> distance(n, INFINITY);
+    vector<number> distance(n, INFINITY);
     vector<int> predecessor(n, 0);
     vector<int> level(n, 0);
     vector<int> levelCount(n, 0);

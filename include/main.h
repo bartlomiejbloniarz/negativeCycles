@@ -1,20 +1,23 @@
 #ifndef CODE_MAIN_H
 #define CODE_MAIN_H
 
-#define INFINITY INT_MAX/2
+#define INFINITY  1000000000000000000
+#define number long long
 
 using namespace std;
 
 #include <vector>
 
 struct neighbour{
-    int dst, weight;
-    explicit neighbour(int dst=0, int weight=0): dst(dst), weight(weight){}
+    int dst;
+    number weight;
+    neighbour(int dst, number weight): dst(dst), weight(weight){}
 };
 
 struct edge{
-    int src, dst, weight;
-    explicit edge(int src=0, int dst=0, int weight=0):src(src), dst(dst), weight(weight){}
+    int src, dst;
+    number weight;
+    edge(int src, int dst, number weight):src(src), dst(dst), weight(weight){}
 };
 
 struct Graph{
@@ -22,7 +25,7 @@ struct Graph{
     vector<edge> edges;
     int n;
     explicit Graph(int n): neighbours(n), n(n) {}
-    void addEdge(int src, int dst, int weight){
+    void addEdge(int src, int dst, number weight){
         edges.emplace_back(src, dst, weight);
         neighbours[src].emplace_back(dst, weight);
     }

@@ -11,9 +11,9 @@ using namespace std;
 bool containsNegativeCycle(Graph& graph, int source){
 
     int n = graph.n;
-    vector<int> distance(n, INFINITY);
+    vector<number> distance(n, INFINITY);
     vector<bool> inQueue(n, false);
-    vector<int> predecessor(n);
+    vector<int> predecessor(n, -1);
     queue<int>Q;
 
     distance[source] = 0;
@@ -26,7 +26,7 @@ bool containsNegativeCycle(Graph& graph, int source){
         inQueue[src] = false;
         for (auto neighbour: graph.neighbours[src]){
             if (distance[src] + neighbour.weight < distance[neighbour.dst]){
-                if (isAncestor(predecessor, src, neighbour.dst, source))
+                if (distance[source]<0 || isAncestor(predecessor, src, neighbour.dst, source))
                     return true;
                 distance[neighbour.dst] = distance[src] + neighbour.weight;
                 predecessor[neighbour.dst] = src;

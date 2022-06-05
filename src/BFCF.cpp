@@ -13,9 +13,9 @@ bool containsNegativeCycle(Graph& graph, int source){
 
     int n = graph.n;
     counter amortizationCounter(n);
-    vector<int> distance(n, INFINITY);
+    vector<number> distance(n, INFINITY);
     vector<bool> inQueue(n, false);
-    vector<int> predecessor(n);
+    vector<int> predecessor(n, -1);
     queue<int>Q;
 
     distance[source] = 0;
@@ -27,9 +27,9 @@ bool containsNegativeCycle(Graph& graph, int source){
         Q.pop();
         inQueue[src] = false;
         for (auto neighbour: graph.neighbours[src]){
-            amortizationCounter.increment();
             if (distance[src] + neighbour.weight < distance[neighbour.dst]){
-                if (amortizationCounter.isActive() && isAncestor(predecessor, src, neighbour.dst, source))
+                amortizationCounter.increment();
+                if (distance[source]<0 || (amortizationCounter.isActive() && predecessorGraphContainsCycle(predecessor, n)))
                     return true;
                 distance[neighbour.dst] = distance[src] + neighbour.weight;
                 predecessor[neighbour.dst] = src;

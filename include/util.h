@@ -13,6 +13,33 @@ bool isAncestor(vector<int>& predecessor, int src, int dst, int source){
     return src == dst;
 }
 
+bool dfs(int v, vector<int>& predecessor, vector<int> &visited){
+    visited[v] = 1;
+    int w = predecessor[v];
+    if (w == -1 || visited[w] == 2) {
+        visited[v] = 2;
+        return false;
+    }
+    if (visited[w] == 1)
+        return true;
+
+    bool result = dfs(w, predecessor, visited);
+    visited[v] = 2;
+    return result;
+}
+
+bool predecessorGraphContainsCycle(vector<int>& predecessor, int n){
+    vector<int> visited(n, 0);
+    for (int v=0; v<n; v++){
+        if (!visited[v]){
+            bool res = dfs(v, predecessor, visited);
+            if (res)
+                return true;
+        }
+    }
+    return false;
+}
+
 struct counter{
     int n, c=1;
     explicit counter(int n): n(n){};

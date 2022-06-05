@@ -1,6 +1,5 @@
 #include <climits>
 #include "main.h"
-#include "util.h"
 #include <stack>
 
 using namespace std;
@@ -13,11 +12,44 @@ using namespace std;
 #define IN_TOP_SORT    2
 #define IN_PASS        3
 
+void strongConnect(int v, vector<int> &indexes, vector<int> &lowLink, stack<int> &S, vector<bool> &onStack, int &index, Graph& graph, vector<number> &distance, vector<int> &scc, stack<int> &pass, vector<int> &status){
+    indexes[v] = index;
+    lowLink[v] = index;
+    index++;
+    S.push(v);
+    onStack[v] = true;
+
+    for(auto neighbour: graph.neighbours[v]) {
+        int w = neighbour.dst;
+        if (distance[v] + neighbour.weight <= distance[w]) {
+            if (indexes[w] == -1){
+                strongConnect(w, indexes, lowLink, S, onStack, index, graph, distance, scc, pass, status);
+                lowLink[v] = min(lowLink[v], lowLink[w]);
+            }
+            else if (onStack[w]){
+                lowLink[v] = min(lowLink[v], indexes[w]);
+            }
+        }
+    }
+
+    if (lowLink[v] == indexes[v]){
+        int w;
+        do{
+            w = S.top();
+            S.pop();
+            onStack[w] = false;
+            scc[w] = indexes[v];
+            pass.push(w);
+            status[w] = IN_PASS;
+        } while (w != v);
+    }
+
+}
+
 bool containsNegativeCycle(Graph& graph, int source){
 
     int n = graph.n;
-    counter amortizationCounter(n);
-    vector<int> distance(n, INFINITY);
+    vector<number> distance(n, INFINITY);
     vector<int> status(n, OUT_OF_STACKS);
     vector<int> parent(n);
     vector<int> current(n);
@@ -30,6 +62,12 @@ bool containsNegativeCycle(Graph& graph, int source){
 
     // main loop
     while(!newPass.empty()){
+
+        int index = 0;
+        vector<int> indexes(n, -1), lowLink(n);
+        stack<int> S;
+        vector<bool> onStack(n, false);
+        vector<int> scc(n, -1);
 
         // topological sorting
         while(!newPass.empty()) {
@@ -57,35 +95,15 @@ bool containsNegativeCycle(Graph& graph, int source){
             if (status[src] == IN_TOP_SORT){
 
                 //dfs
-                while(true){
-                    int i, size = graph.neighbours[src].size();
-                    for(i=current[src]; i<size; i++){
-                        auto neighbour = graph.neighbours[src][i];
-                        if (distance[src] + neighbour.weight <= distance[neighbour.dst]){
-                            if (status[neighbour.dst] < IN_TOP_SORT) {
-                                current[src] = i + 1;
-                                topSort.push(src);
-                                status[neighbour.dst] = IN_TOP_SORT;
-                                current[neighbour.dst] = 0;
-                                src = neighbour.dst;
-                                break;
-                            }
-                            else if (status[neighbour.dst] == IN_TOP_SORT)
-                                return true;
-                        }
-                    }
-                    if (i == size){
-                        status[src] = IN_PASS;
-                        pass.push(src);
-                        if (!topSort.empty()){
-                            src = topSort.top();
-                            topSort.pop();
-                        }
-                        else
-                            break;
-                    }
-                }
+                strongConnect(src, indexes, lowLink, S, onStack, index, graph, distance, scc, pass, status);
+
             }
+        }
+
+        //check for cycles
+        for (auto e: graph.edges){
+            if (distance[e.src] != INFINITY && distance[e.src] + e.weight < distance[e.dst] && scc[e.src] == scc[e.dst])
+                return true;
         }
 
         // bellman-ford pass
@@ -95,7 +113,7 @@ bool containsNegativeCycle(Graph& graph, int source){
             status[src] = OUT_OF_STACKS;
 
             for (auto neighbour: graph.neighbours[src]){
-                int distNew = distance[src] + neighbour.weight;
+                number distNew = distance[src] + neighbour.weight;
                 if (distNew < distance[neighbour.dst]){
                     distance[neighbour.dst] = distNew;
                     parent[neighbour.dst] = src;

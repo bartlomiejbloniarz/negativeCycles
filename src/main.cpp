@@ -23,7 +23,8 @@ int main(int argc, char** argv) {
         cin>>n>>m>>source;
         Graph graph(n);
         while(m--){
-            int src, dst, weight;
+            int src, dst;
+            number weight;
             cin >> src >> dst >> weight;
             graph.addEdge(src, dst, weight);
         }

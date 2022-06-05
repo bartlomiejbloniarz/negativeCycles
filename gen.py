@@ -10,7 +10,7 @@ def check(x, y, d):
     return True
 
 
-def getNextEdge(n, maxW, d):
+def getNextEdge(n, minW, maxW, d):
     x = random.randint(0, n - 1)
     y = random.randint(0, n - 1)
     while not check(x, y, d):
@@ -21,23 +21,25 @@ def getNextEdge(n, maxW, d):
 
 def main():
     maxZ = 1
-    maxN = 1000
-    maxW = 100
+    minN = 100000
+    maxN = 100000
+    minW = 0
+    maxW = 32000
 
     z = random.randint(1, maxZ)
     print(z)
 
     for _ in range(z):
 
-        n = random.randint(2, maxN)
-        m = random.randint(0, 2*n)#*int(math.sqrt(n)))
+        n = random.randint(minN, maxN)
+        m = 500000#random.randint(0, 2*n)#*int(math.sqrt(n)))
         s = random.randint(0, n-1)
         d = set()
 
         print("{} {} {}".format(n, m, s))
 
         for _ in range(m):
-            x, y, w = getNextEdge(n, maxW, d)
+            x, y, w = getNextEdge(n, minW, maxW, d)
             d.add((x, y))
             print("{} {} {}".format(x, y, w))
 
