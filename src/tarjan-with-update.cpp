@@ -1,6 +1,7 @@
 #include <climits>
 #include "main.h"
 #include "util.h"
+#include <iostream>
 
 #define epsilon 1
 
@@ -41,12 +42,15 @@ bool containsNegativeCycle(Graph& graph, int source){
     distance[source] = 0;
     Q.push(source);
 
+    number c = 0;
     while (!Q.isEmpty()){
         int src = Q.pop();
         for (auto neighbour: graph.neighbours[src]){
             number delta = distance[neighbour.dst] - distance[src] - neighbour.weight;
             if (delta > 0){
+                c++;
                 if (neighbour.dst == source) {
+                    cout<<c<<endl;
                     return true;
                 }
                 distance[neighbour.dst] -= delta;
@@ -57,6 +61,7 @@ bool containsNegativeCycle(Graph& graph, int source){
                 parent[neighbour.dst] = src;
                 Q.push(neighbour.dst);
                 if (disassemble(neighbour.dst, children, Q, src, delta, distance)) {
+                    cout<<c<<endl;
                     return true;
                 }
                 children[src].push_back(childrenNodes[neighbour.dst]);
@@ -64,5 +69,6 @@ bool containsNegativeCycle(Graph& graph, int source){
             }
         }
     }
+    cout<<c<<endl;
     return false;
 }

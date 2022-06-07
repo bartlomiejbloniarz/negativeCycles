@@ -76,7 +76,7 @@ bool containsNegativeCycle(Graph& graph, int source){
             newPass.pop();
 
             if (status[src] == IN_NEW_PASS) {
-                
+
                 //looking for any edge with negative reduced cost outgoing from src if any - start dfs
                 int dst = -1;
                 for (auto neighbour: graph.neighbours[src]) {

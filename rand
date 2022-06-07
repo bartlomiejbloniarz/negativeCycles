@@ -1,0 +1,5 @@
+import random
+
+print(2*random.randint(1,1000000))
+
+

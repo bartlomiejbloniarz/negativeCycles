@@ -174,4 +174,40 @@ struct Queue{
     }
 };
 
+struct QueueSimple{
+    int n, head, tail;
+    vector<int>prev, next;
+    QueueSimple(int n): n(n), prev(n+2,-1), next(n+2,-1){
+        head = n;
+        tail = n+1;
+        next[head] = tail;
+        prev[tail] = head;
+    }
+    void push(int x){
+        if (next[x] == -1){
+            next[prev[tail]] = x;
+            prev[x] = prev[tail];
+            next[x] = tail;
+            prev[tail] = x;
+        }
+    }
+    int pop(){
+        int x = next[head];
+        remove(x);
+        return x;
+    }
+    void remove(int x){
+        if (next[x] != -1){
+            int p = prev[x];
+            next[p] = next[x];
+            prev[next[x]] = p;
+            next[x] = -1;
+            prev[x] = -1;
+        }
+    }
+    bool isEmpty(){
+        return next[head] == tail;
+    }
+};
+
 #endif //CODE_UTIL_H
