@@ -31,6 +31,6 @@ struct Graph{
     }
 };
 
-bool containsNegativeCycle(Graph &graph, int source);
+bool containsNegativeCycle(Graph &graph, int source, number& labelingCount);
 
 #endif //CODE_MAIN_H

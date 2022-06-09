@@ -27,7 +27,7 @@ bool disassemble(int x, LinkedList* children, QueueSimple &Q, int v){
 }
 
 
-bool containsNegativeCycle(Graph& graph, int source){
+bool containsNegativeCycle(Graph& graph, int source, number& labelingCount){
 
     int n = graph.n;
     vector<number> distance(n, INFINITY);
@@ -42,6 +42,7 @@ bool containsNegativeCycle(Graph& graph, int source){
         int src = Q.pop();
         for (auto neighbour: graph.neighbours[src]){
             number delta = distance[neighbour.dst] - distance[src] - neighbour.weight;
+            labelingCount++;
             if (delta > 0){
                 if (neighbour.dst == source) {
                     return true;

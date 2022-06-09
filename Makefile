@@ -7,7 +7,7 @@ SYMLINK := ln -s
 
 TESTER=bellman-ford-break
 
-all: output bellman-ford bellman-ford-break saranya-shobhalatha BFCF BFCS goldfarb-hao-kai goldberg-radzik tarjan tarjan-with-update tarjan-simple
+all: output bellman-ford bellman-ford-break saranya-shobhalatha BFCF BFCS goldfarb-hao-kai goldberg-radzik tarjan tarjan-with-update tarjan-simple goldberg-radzik-simplified
 
 output:
 	$(MD) output
@@ -25,6 +25,8 @@ BFCS: output output/BFCS.o
 goldfarb-hao-kai: output output/goldfarb-hao-kai.o
 
 goldberg-radzik: output output/goldberg-radzik.o
+
+goldberg-radzik-simplified: output output/goldberg-radzik-simplified.o
 
 tarjan: output output/tarjan.o
 
@@ -57,7 +59,7 @@ test-benchmark: test-benchmark-create BFCF-test-benchmark BFCS-test-benchmark go
 	output/$<.o -b < test-benchmark/test.in >> test-benchmark/$<.out
 
 output/%.o: src/%.cpp
-	g++ -std=c++17 -O3 -Wall -Wextra -g -Iinclude src/main.cpp $< -o $@
+	g++ -std=c++17 -Wall -Wextra -g -Iinclude src/main.cpp $< -o $@
 
 .PHONY: clean
 clean:

@@ -2,22 +2,22 @@
 #include "main.h"
 #include <cstring>
 
-#define benchmarkFlag "-b"
-#define resultFlag "-r"
+#define timeFlag "-t"
+#define labelingCountFlag "-c"
 
 using namespace std;
 
 int main(int argc, char** argv) {
     if (argc == 1){
-        cout << "Error: no arguments given. Use " << benchmarkFlag << " for benchmark or " << resultFlag << " for result" << endl;
+        cout << "Error: no arguments given. Use " << timeFlag << " for time or " << labelingCountFlag << " for labeling count" << endl;
         return 1;
-    } else if (!strcmp(argv[1], benchmarkFlag) && !strcmp(argv[1], resultFlag)) {
-        cout << "Error: incorrect arguments. Use " << benchmarkFlag << " for benchmark or " << resultFlag << " for result" << endl;
+    } else if (!strcmp(argv[1], timeFlag) && !strcmp(argv[1], labelingCountFlag)) {
+        cout << "Error: incorrect arguments. Use " << timeFlag << " for time or " << labelingCountFlag << " for labeling count" << endl;
         return 1;
     }
     int z;
     cin>>z;
-    bool printResult = !strcmp(argv[1], resultFlag);
+    bool printTime = !strcmp(argv[1], timeFlag);
     while(z--){
         int n, m, source;
         cin>>n>>m>>source;
@@ -28,12 +28,14 @@ int main(int argc, char** argv) {
             cin >> src >> dst >> weight;
             graph.addEdge(src, dst, weight);
         }
+        number labelingCount=0;
         clock_t time = clock(); // measures CPU time on Linux
-        bool result = containsNegativeCycle(graph, source);
+        bool result = containsNegativeCycle(graph, source, labelingCount);
         time = clock() - time;
-        if (printResult)
-            cout<<result<<endl;
+        cout<<result<<endl;
+        if (printTime)
+            cerr<<time<<endl;
         else
-            cout<<time<<endl;
+            cerr<<labelingCount<<endl;
     }
 }

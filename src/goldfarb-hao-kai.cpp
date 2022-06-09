@@ -8,7 +8,7 @@ using namespace std;
 // level-based strategy
 // O(nm)
 
-bool containsNegativeCycle(Graph& graph, int source){
+bool containsNegativeCycle(Graph& graph, int source, number& labelingCount){
 
     int n = graph.n, k=1;
     vector<number> distance(n, INFINITY);
@@ -33,6 +33,7 @@ bool containsNegativeCycle(Graph& graph, int source){
             Q1.pop();
             if (level[src] == k){
                 for (auto neighbour: graph.neighbours[src]){
+                    labelingCount++;
                     if (distance[src] + neighbour.weight < distance[neighbour.dst]){
                         distance[neighbour.dst] = distance[src] + neighbour.weight;
                         predecessor[neighbour.dst] = src;

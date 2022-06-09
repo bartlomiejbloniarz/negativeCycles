@@ -9,7 +9,7 @@ using namespace std;
 // O(nm)
 
 
-bool containsNegativeCycle(Graph& graph, int source){
+bool containsNegativeCycle(Graph& graph, int source, number& labelingCount){
 
     int n = graph.n;
     counter amortizationCounter(n);
@@ -27,6 +27,7 @@ bool containsNegativeCycle(Graph& graph, int source){
         Q.pop();
         inQueue[src] = false;
         for (auto neighbour: graph.neighbours[src]){
+            labelingCount++;
             if (distance[src] + neighbour.weight < distance[neighbour.dst]){
                 amortizationCounter.increment();
                 if (distance[source]<0 || (amortizationCounter.isActive() && predecessorGraphContainsCycle(predecessor, n)))

@@ -10,7 +10,7 @@ using namespace std;
 
 // strategy: time out and walk to the root
 
-bool containsNegativeCycle(Graph &graph, int s){
+bool containsNegativeCycle(Graph &graph, int s, number& labelingCount){
     int n = graph.n;
     vector<number> d(n, INFINITY), pd(n, INFINITY);
     vector<int> pi(n, -1), ns(n, 0);

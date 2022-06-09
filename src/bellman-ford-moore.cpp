@@ -7,7 +7,7 @@ using namespace std;
 // Shortest Path Faster Algorithm (SPFA)
 // O(nm)
 
-void bellman_ford_moore(Graph& graph, int source){
+void bellman_ford_moore(Graph& graph, int source, number& labelingCount){
 
     int n = graph.n;
     vector<number> distance(n, INFINITY);
@@ -23,6 +23,7 @@ void bellman_ford_moore(Graph& graph, int source){
         Q.pop();
         inQueue[src] = false;
         for (auto neighbour: graph.neighbours[src]){
+            labelingCount++;
             if (distance[src] + neighbour.weight < distance[neighbour.dst]){
                 distance[neighbour.dst] = distance[src] + neighbour.weight;
                 if (!inQueue[neighbour.dst]){
