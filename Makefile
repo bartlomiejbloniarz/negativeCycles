@@ -7,7 +7,7 @@ SYMLINK := ln -s
 
 TESTER=bellman-ford-break
 
-all: output bellman-ford bellman-ford-break saranya-shobhalatha BFCF BFCS goldfarb-hao-kai goldberg-radzik tarjan tarjan-with-update tarjan-simple goldberg-radzik-simplified
+all: output bellman-ford bellman-ford-break saranya-shobhalatha BFCF BFCS goldfarb-hao-kai goldberg-radzik tarjan tarjan-with-update tarjan-simple goldberg-radzik-simplified goldberg-radzik-simplified-2
 
 output:
 	$(MD) output
@@ -27,6 +27,8 @@ goldfarb-hao-kai: output output/goldfarb-hao-kai.o
 goldberg-radzik: output output/goldberg-radzik.o
 
 goldberg-radzik-simplified: output output/goldberg-radzik-simplified.o
+
+goldberg-radzik-simplified-2: output output/goldberg-radzik-simplified-2.o
 
 tarjan: output output/tarjan.o
 

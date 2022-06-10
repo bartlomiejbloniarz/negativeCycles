@@ -21,9 +21,11 @@ def getNextEdge(n, minW, maxW, d):
 
 def main():
     maxZ = 1
-    minN = 3
-    maxN = 1000
-    minW = -32000
+    minN = 10000
+    maxN = 10000
+    minM = 20000
+    maxM = 20000
+    minW = -8000
     maxW = 32000
 
     z = random.randint(1, maxZ)
@@ -32,7 +34,7 @@ def main():
     for _ in range(z):
 
         n = random.randint(minN, maxN)
-        m = random.randint(0, 2*n)#*int(math.sqrt(n)))
+        m = random.randint(minM, maxM)
         s = random.randint(0, n-1)
         d = set()
 
